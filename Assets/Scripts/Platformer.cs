@@ -12,6 +12,13 @@ public class Platformer : MonoBehaviour
     // Designate jumping force
     public float jumpingForce;
 
+    // Designate grounded check and associated items
+    bool isGrounded = false;
+    public float groundRayLength;
+    public LayerMask layers;
+
+    // Designate direction for Shoot script
+    public bool isFacingRight = true;
 
     // Start is called before the first frame update
     void Start()
@@ -20,15 +27,19 @@ public class Platformer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Move();
         Jump();
+        isGrounded = Physics2D.Raycast(transform.position,
+            -transform.up, groundRayLength, layers);
+        Debug.DrawRay(transform.position, -transform.up * groundRayLength);
+        directionCheck();
     }
 
     void Jump()
     {
-        if(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetButtonDown("Jump") && isGrounded)
             rb.velocity = new Vector2(rb.velocity.x, jumpingForce);
     }
 
@@ -37,5 +48,13 @@ public class Platformer : MonoBehaviour
         float x = Input.GetAxisRaw("Horizontal");
         float moveBy = x * speed;
         rb.velocity = new Vector2(moveBy, rb.velocity.y);
+    }
+
+    void directionCheck()
+    {
+        if (rb.velocity.x > 0)
+            isFacingRight = true;
+        else if (rb.velocity.x < 0)
+            isFacingRight = false;
     }
 }
