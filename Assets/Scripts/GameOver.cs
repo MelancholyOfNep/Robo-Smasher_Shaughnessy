@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChange : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
     void Update()
     {
@@ -11,5 +11,8 @@ public class SceneChange : MonoBehaviour
         {
             SceneManager.LoadScene("GameOverScene");
         }
+
+        if (Input.GetButtonDown("Cancel"))
+            SceneManager.LoadScene("MainMenuScene");
     }
 }
