@@ -27,13 +27,12 @@ public class Platformer : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         Move();
         Jump();
         isGrounded = Physics2D.Raycast(transform.position,
             -transform.up, groundRayLength, layers);
-        Debug.DrawRay(transform.position, -transform.up * groundRayLength);
         directionCheck();
     }
 
