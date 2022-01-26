@@ -1,8 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
-    public float shotSpeed = 15f;
+    public float shotSpeed = 10f;
     public Rigidbody2D rb;
 
     void FixedUpdate()

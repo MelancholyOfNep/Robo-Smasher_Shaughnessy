@@ -33,7 +33,7 @@ public class Platformer : MonoBehaviour
         Jump();
         isGrounded = Physics2D.Raycast(transform.position,
             -transform.up, groundRayLength, layers);
-        directionCheck();
+        DirectionCheck();
     }
 
     void Jump()
@@ -49,7 +49,7 @@ public class Platformer : MonoBehaviour
         rb.velocity = new Vector2(moveBy, rb.velocity.y);
     }
 
-    void directionCheck()
+    void DirectionCheck()
     {
         if (rb.velocity.x > 0)
             isFacingRight = true;

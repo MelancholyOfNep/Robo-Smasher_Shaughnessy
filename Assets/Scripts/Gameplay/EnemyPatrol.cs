@@ -10,7 +10,7 @@ public class EnemyPatrol : MonoBehaviour
 
     public Transform groundCheck;
 
-    bool isFacingRight = true;
+    public bool isFacingRight = true;
 
     RaycastHit2D hit;
 

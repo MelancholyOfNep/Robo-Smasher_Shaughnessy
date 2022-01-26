@@ -4,28 +4,62 @@ using UnityEngine;
 
 public class EnemyShoot : MonoBehaviour
 {
-    public GameObject bulletPF;
-    public Transform bulletSpawn;
-    public Transform sightStart, sightEnd;
-    public bool spotted = false;
-    float fireRate = 3f;
-    float ttns; // time to next shot
-    public Rigidbody2D rb;
-    public bool isFacingRight;
+    [SerializeField]
+    float fireRate;
+    [SerializeField]
+    Transform gun;
+    [SerializeField]
+    GameObject bulletPF;
+    [SerializeField]
+    LayerMask player;
 
-    void Update()
+
+    float cooldown = 0f;
+    EnemyPatrol enemy;
+
+    // Start is called before the first frame update
+    private void Start()
     {
-        directionCheck();
-
-        // TODO: Rewrite all of this to match the player's shooting. Fire left or right when moving either way, possibly regardless of movement direction.
+        enemy = gameObject.GetComponent<EnemyPatrol>();
     }
 
-    
-    void directionCheck()
+    // Update is called once per frame
+    private void Update()
     {
-        if (rb.velocity.x > 0)
-            isFacingRight = true;
-        else if (rb.velocity.x < 0)
-            isFacingRight = false;
+        FireControlGroup(enemy.isFacingRight);
+    }
+
+    void Fire()
+    {
+        float angle = enemy.isFacingRight ? 0f : 180f;
+        Instantiate(bulletPF, gun.position, Quaternion.Euler(new Vector3(0f, 0f, angle)));
+    }
+
+    void FireControlGroup(bool right)
+    {
+        if (right == true)
+        {
+            
+            Debug.DrawRay(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z));
+            RaycastHit2D hit = Physics2D.Raycast(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z), 10f, player);
+            if (hit.collider != false && cooldown < Time.time)
+            {
+                
+                Fire();
+                cooldown = Time.time + fireRate;
+            }
+        }
+        else if (right == false)
+        {
+            
+            Debug.DrawRay(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z));
+            RaycastHit2D hit = Physics2D.Raycast(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z), 10f, player);
+            if (hit.collider != false && cooldown < Time.time)
+            {
+                
+                Fire();
+                cooldown = Time.time + fireRate;
+            }
+        }
     }
 }

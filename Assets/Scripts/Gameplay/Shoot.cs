@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    public float fireRate = 0.2f;
-    public Transform gun;
-    public GameObject bulletPF;
+    [SerializeField]
+    float fireRate = 0.2f;
+    [SerializeField]
+    Transform gun;
+    [SerializeField]
+    GameObject bulletPF;
 
     float cooldown = 0f;
     Platformer plat;
@@ -25,7 +28,7 @@ public class Shoot : MonoBehaviour
         }
     }
 
-    void Fire()
+    private void Fire()
     {
         float angle = plat.isFacingRight ? 0f : 180f;
         if (plat.isFacingRight == true)

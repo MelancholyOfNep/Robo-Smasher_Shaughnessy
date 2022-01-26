@@ -1,14 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager instance;
 
-    public Transform respawnPt;
-    public GameObject playerPF;
-    public int deathCount = 0;
+    [SerializeField]
+    Transform respawnPt; // player respawn location
+    [SerializeField]
+    GameObject playerPF; // prefab for respawning player
+    [SerializeField]
+    int enemyCount; // # of enemies
+
+    public int deathCount = 3;
 
     private void Awake()
     {
@@ -18,6 +24,22 @@ public class LevelManager : MonoBehaviour
     public void Respawn()
     {
         Instantiate(playerPF, respawnPt.position, Quaternion.identity);
-        deathCount++;
+        deathCount--;
+    }
+
+    private void Update()
+    {
+        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (enemyCount <= 0)
+            SceneManager.LoadScene("VictoryScene");
+
+        if (gameObject.GetComponent<LevelManager>().deathCount == 0)
+        {
+            SceneManager.LoadScene("GameOverScene");
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+            SceneManager.LoadScene("MainMenuScene");
     }
 }
