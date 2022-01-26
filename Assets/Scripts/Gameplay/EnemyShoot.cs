@@ -12,21 +12,22 @@ public class EnemyShoot : MonoBehaviour
     GameObject bulletPF;
     [SerializeField]
     LayerMask player;
+    // [SerializeField]
+    // Transform playerObj;
 
 
     float cooldown = 0f;
     EnemyPatrol enemy;
 
-    // Start is called before the first frame update
     private void Start()
     {
         enemy = gameObject.GetComponent<EnemyPatrol>();
     }
 
-    // Update is called once per frame
     private void Update()
     {
         FireControlGroup(enemy.isFacingRight);
+        //Debug.DrawRay(gun.position, playerObj.transform.position - gun.position);
     }
 
     void Fire()
@@ -40,7 +41,7 @@ public class EnemyShoot : MonoBehaviour
         if (right == true)
         {
             
-            Debug.DrawRay(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z));
+            // Debug.DrawRay(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z));
             RaycastHit2D hit = Physics2D.Raycast(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z), 10f, player);
             if (hit.collider != false && cooldown < Time.time)
             {
@@ -52,14 +53,24 @@ public class EnemyShoot : MonoBehaviour
         else if (right == false)
         {
             
-            Debug.DrawRay(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z));
+            // Debug.DrawRay(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z));
             RaycastHit2D hit = Physics2D.Raycast(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z), 10f, player);
             if (hit.collider != false && cooldown < Time.time)
             {
-                
                 Fire();
                 cooldown = Time.time + fireRate;
             }
         }
     }
+
+    /*public void ShootAtPlayer()
+    {
+        Debug.DrawRay(gun.position, playerObj.transform.position - gun.position);
+        RaycastHit2D hit = Physics2D.Raycast(gun.position, playerObj.transform.position - gun.position, 10f, player);
+
+        if (hit.transform.tag == "Player")
+        {
+
+        }
+    }*/
 }
