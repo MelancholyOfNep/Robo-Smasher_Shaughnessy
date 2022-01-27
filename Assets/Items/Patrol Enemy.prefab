@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 8771778594540819619}
   - component: {fileID: 3732495075369884385}
   - component: {fileID: 4146309324328898706}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Patrol Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -237,7 +237,10 @@ MonoBehaviour:
   player:
     serializedVersion: 2
     m_Bits: 256
-  playerObj: {fileID: 0}
+  playerObj: {fileID: 851405284868329900, guid: 8fda2e50c89dde7458b423f1a2860f53, type: 3}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!1 &8771778595874684757
 GameObject:
   m_ObjectHideFlags: 0

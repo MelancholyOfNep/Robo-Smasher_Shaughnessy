@@ -5,6 +5,13 @@ using UnityEngine;
 public class PlayerDeath : MonoBehaviour
 {
     public GameObject explosion;
+    public static PlayerDeath Instance;
+
+    private void Start()
+    {
+        Instance = this;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

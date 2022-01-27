@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartGameButton : MonoBehaviour
+public class LevelSelect : MonoBehaviour
 {
+    [SerializeField]
+    string sceneSelected;
+
     public void OnButtonPress()
     {
         StartCoroutine(AsyncSceneLoad());
@@ -12,7 +15,7 @@ public class StartGameButton : MonoBehaviour
 
     IEnumerator AsyncSceneLoad()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("a1");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneSelected);
 
         // Wait until the scene fully loads
         while (!asyncLoad.isDone)

@@ -12,8 +12,10 @@ public class EnemyShoot : MonoBehaviour
     GameObject bulletPF;
     [SerializeField]
     LayerMask player;
-    // [SerializeField]
-    // Transform playerObj;
+    [SerializeField]
+    Transform playerObj;
+    [SerializeField]
+    LayerMask enemyLayer;
 
 
     float cooldown = 0f;
@@ -27,7 +29,8 @@ public class EnemyShoot : MonoBehaviour
     private void Update()
     {
         FireControlGroup(enemy.isFacingRight);
-        //Debug.DrawRay(gun.position, playerObj.transform.position - gun.position);
+        if (PlayerDeath.Instance != null)
+            Debug.DrawRay(gun.position, PlayerDeath.Instance.transform.position - gun.position);
     }
 
     void Fire()
@@ -40,25 +43,31 @@ public class EnemyShoot : MonoBehaviour
     {
         if (right == true)
         {
-            
-            // Debug.DrawRay(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z));
-            RaycastHit2D hit = Physics2D.Raycast(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z), 10f, player);
-            if (hit.collider != false && cooldown < Time.time)
+            RaycastHit2D test = Physics2D.Raycast(gun.position, (PlayerDeath.Instance.transform.position - gun.position), 10f, enemyLayer);
+            if (test.collider == false)
             {
-                
-                Fire();
-                cooldown = Time.time + fireRate;
+                // Debug.DrawRay(gun.position, new Vector3(10f, gun.localPosition.y, gun.localPosition.z));
+                RaycastHit2D hit = Physics2D.Raycast(gun.position, (PlayerDeath.Instance.transform.position - gun.position), 10f, player);
+                if (hit.collider != false && cooldown < Time.time)
+                {
+
+                    Fire();
+                    cooldown = Time.time + fireRate;
+                }
             }
         }
         else if (right == false)
         {
-            
-            // Debug.DrawRay(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z));
-            RaycastHit2D hit = Physics2D.Raycast(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z), 10f, player);
-            if (hit.collider != false && cooldown < Time.time)
+            RaycastHit2D test = Physics2D.Raycast(gun.position, (PlayerDeath.Instance.transform.position - gun.position), 10f, enemyLayer);
+            if (test.collider == false)
             {
-                Fire();
-                cooldown = Time.time + fireRate;
+                // Debug.DrawRay(gun.position, new Vector3(-10f, gun.localPosition.y, gun.localPosition.z));
+                RaycastHit2D hit = Physics2D.Raycast(gun.position, (PlayerDeath.Instance.transform.position - gun.position), 10f, player);
+                if (hit.collider != false && cooldown < Time.time)
+                {
+                    Fire();
+                    cooldown = Time.time + fireRate;
+                }
             }
         }
     }
