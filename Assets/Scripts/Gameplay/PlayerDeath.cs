@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerDeath : MonoBehaviour
 {
     public GameObject explosion;
     public static PlayerDeath Instance;
+    [SerializeField]
+    AudioSource deathExplSound;
+    [SerializeField]
+    SpriteRenderer rend;
+    [SerializeField]
+    BoxCollider2D boxCol;
 
     private void Start()
     {
@@ -17,6 +24,9 @@ public class PlayerDeath : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            deathExplSound.Play();
+            rend.enabled = false;
+            boxCol.enabled = false;
             Instantiate(explosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
             LevelManager.instance.Respawn();
